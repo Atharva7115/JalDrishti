@@ -1,10 +1,47 @@
-const express = require('express');
-const cors = require('cors');
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+
+import healthRoutes from "./routes/health.routes.js";
 
 const app = express();
 
+/*
+|--------------------------------------------------------------------------
+| Global Middlewares
+|--------------------------------------------------------------------------
+*/
+
+app.use(helmet());
+
 app.use(cors());
+
+app.use(morgan("dev"));
+
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
-module.exports = app;
+/*
+|--------------------------------------------------------------------------
+| Routes
+|--------------------------------------------------------------------------
+*/
+
+app.use("/health", healthRoutes);
+
+/*
+|--------------------------------------------------------------------------
+| 404 Handler
+|--------------------------------------------------------------------------
+*/
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+export default app;
