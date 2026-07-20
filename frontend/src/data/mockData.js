@@ -67,7 +67,7 @@ export const forecasts = stations.flatMap((station) =>
 );
 
 export const rechargeCalculations = stations.map((station, index) => ({
-  id: `recharge-${index + 1}`, stationId: station.id, periodStart: '2025-07-01', periodEnd: '2026-06-30', aquiferArea: 12.5 + index, waterLevelFluctuation: 1.2 + (index % 5) * 0.3, specificYield: 0.025 + (index % 3) * 0.005, rechargeValue: station.rechargeEstimate, methodology: 'WTF', calculatedAt: '2026-07-13T18:00:00+05:30',
+  id: `recharge-${index + 1}`, stationId: station.id, periodStart: '2025-07-01', periodEnd: '2026-06-30', aquiferArea: 12.5 + index, waterLevelFluctuation: 1.2 + (index % 5) * 0.3, specificYield: 0.025 + (index % 3) * 0.005, rechargeValue: station.rechargeEstimate, calculationMethod: 'WTF', calculatedAt: '2026-07-13T18:00:00+05:30',
 }));
 
 export const alerts = [

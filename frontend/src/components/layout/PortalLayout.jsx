@@ -5,7 +5,7 @@ import { useAppStore } from '../../store/appStore';
 import { OfflineBanner } from '../common/UI';
 
 const navItems = [
-  ['Home', '/'], ['Groundwater Map', '/map'], ['Stations', '/stations'], ['District Status', '/districts'], ['Forecast', '/public-status'], ['Alerts', '/alerts'], ['Data Explorer', '/researcher'], ['Reports', '/reports'], ['Methodology', '/methodology'], ['About', '/about'],
+  ['Home', '/'], ['Groundwater Map', '/map'], ['Stations', '/stations'], ['District Status', '/districts'], ['Forecast', '/public-status'], ['Alerts', '/alerts'], ['Data Explorer', '/researcher'], ['Reports', '/reports'], ['About', '/about'],
 ];
 
 export function Logo() {
@@ -31,7 +31,7 @@ function Navigation({ mobileOpen, setMobileOpen }) {
 }
 
 function Footer() {
-  return <footer className="footer"><div className="container footer-grid"><div><Logo /><p>Decision-ready groundwater information from monitoring stations, analytical methods, and forecasts.</p></div><div><h3>Explore</h3><Link to="/methodology">Methodology</Link><Link to="/data-sources">Data Sources</Link><Link to="/learn">Learn</Link><Link to="/about">About</Link></div><div><h3>Support</h3><Link to="/help">Help & Support</Link><Link to="/settings">Accessibility</Link><button onClick={() => window.alert('Privacy policy is a frontend demonstration placeholder.')}>Privacy Policy</button><button onClick={() => window.alert('Terms of use are a frontend demonstration placeholder.')}>Terms of Use</button></div><div><h3>Important links</h3><span>Central Ground Water Board</span><span>National Water Data Portal</span><span>Ministry of Jal Shakti</span><span>India-WRIS</span></div></div><div className="footer-note"><div className="container"><p>JalDrishti is a groundwater decision-support platform. Forecasts and processed values should not be treated as official regulatory declarations.</p><span>Last updated: 14 July 2026 · Version 1.0.0</span></div></div></footer>;
+  return <footer className="footer"><div className="container footer-grid"><div><Logo /><p>Decision-ready groundwater information from monitoring stations, analytical methods, and forecasts.</p></div><div><h3>Explore</h3><Link to="/data-sources">Data Sources</Link><Link to="/learn">Learn</Link><Link to="/about">About</Link></div><div><h3>Support</h3><Link to="/help">Help & Support</Link><Link to="/settings">Accessibility</Link><button onClick={() => window.alert('Privacy policy is a frontend demonstration placeholder.')}>Privacy Policy</button><button onClick={() => window.alert('Terms of use are a frontend demonstration placeholder.')}>Terms of Use</button></div><div><h3>Important links</h3><span>Central Ground Water Board</span><span>National Water Data Portal</span><span>Ministry of Jal Shakti</span><span>India-WRIS</span></div></div><div className="footer-note"><div className="container"><p>JalDrishti is a groundwater decision-support platform. Forecasts and processed values should not be treated as official regulatory declarations.</p><span>Last updated: 14 July 2026 · Version 1.0.0</span></div></div></footer>;
 }
 
 export default function PortalLayout() {
