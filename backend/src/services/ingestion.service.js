@@ -1,3 +1,5 @@
+import API_CONFIG from "../config/api.config.js";
+
 import { fetchGroundwaterData } from "./nwdp.service.js";
 
 import {
@@ -15,77 +17,154 @@ import {
 
 export const ingestGroundwaterData = async () => {
   try {
+    // ==========================================
+    // Start Timer
+    // ==========================================
+    const startTime = Date.now();
+
     console.log("\n======================================");
     console.log("     NWDP DATA INGESTION STARTED");
     console.log("======================================\n");
 
-    // Fetch first batch
-    const result = await fetchGroundwaterData();
+    // ==========================================
+    // Phase 1 : Initialization
+    // ==========================================
 
-    const records = result.records;
+    const batchSize = API_CONFIG.nwdp.batchSize;
 
-    console.log(`Total Records Available : ${result.total}`);
-    console.log(`Current Batch Size      : ${records.length}\n`);
+    let offset = 0;
+    let totalRecords = 0;
+    let batchNumber = 1;
 
-    let newStations = 0;
-    let existingStations = 0;
+    const stats = {
+      cacheHits: 0,
+      databaseHits: 0,
+      stationsCreated: 0,
+      newReadings: 0,
+      duplicateReadings: 0,
+      processedRecords: 0,
+    };
 
-    let newReadings = 0;
-    let duplicateReadings = 0;
+    // ==========================================
+    // Phase 2 : Batch Processing
+    // ==========================================
 
-    for (const record of records) {
-      try {
-        // -------------------------
-        // Map Station
-        // -------------------------
-        const stationData = mapStation(record);
+    do {
+      const result = await fetchGroundwaterData(batchSize, offset);
 
-        const {
-          station,
-          created: stationCreated,
-        } = await findOrCreateStation(stationData);
+      const records = result.records;
+      totalRecords = result.total;
 
-        if (stationCreated) {
-          newStations++;
-        } else {
-          existingStations++;
+      const progress = (
+        (stats.processedRecords / totalRecords) *
+        100
+      ).toFixed(2);
+
+      console.log("--------------------------------------");
+      console.log(`Batch              : ${batchNumber}`);
+      console.log(`Offset             : ${offset}`);
+      console.log(`Records            : ${records.length}`);
+      console.log(`Processed          : ${stats.processedRecords}/${totalRecords}`);
+      console.log(`Progress           : ${progress}%`);
+      console.log("--------------------------------------");
+
+      // --------------------------------------
+      // Process Current Batch
+      // --------------------------------------
+
+      for (const record of records) {
+        try {
+          // -----------------------------
+          // Station
+          // -----------------------------
+
+          const stationData = mapStation(record);
+
+          const {
+            station,
+            source,
+          } = await findOrCreateStation(stationData);
+
+          switch (source) {
+            case "CACHE":
+              stats.cacheHits++;
+              break;
+
+            case "DATABASE":
+              stats.databaseHits++;
+              break;
+
+            case "CREATED":
+              stats.stationsCreated++;
+              break;
+          }
+
+          // -----------------------------
+          // Reading
+          // -----------------------------
+
+          const readingData = mapReading(
+            record,
+            station.id
+          );
+
+          const {
+            created,
+          } = await findOrCreateReading(readingData);
+
+          if (created) {
+            stats.newReadings++;
+          } else {
+            stats.duplicateReadings++;
+          }
+
+          stats.processedRecords++;
+
+        } catch (error) {
+          console.error(
+            `Error processing station "${record["Station"]}"`,
+            error.message
+          );
         }
-
-        // -------------------------
-        // Map Reading
-        // -------------------------
-        const readingData = mapReading(record, station.id);
-
-        const {
-          created: readingCreated,
-        } = await findOrCreateReading(readingData);
-
-        if (readingCreated) {
-          newReadings++;
-        } else {
-          duplicateReadings++;
-        }
-
-      } catch (error) {
-        console.error(
-          `Error processing station "${record["Station"]}" :`,
-          error.message
-        );
       }
-    }
+
+      console.log(
+        `Completed Batch ${batchNumber} (${stats.processedRecords}/${totalRecords})`
+      );
+
+      console.log("");
+
+      offset += records.length;
+      batchNumber++;
+
+    } while (offset < totalRecords);
+
+    // ==========================================
+    // Phase 3 : Final Summary
+    // ==========================================
+
+    const executionTime = (
+      (Date.now() - startTime) / 1000
+    ).toFixed(2);
 
     console.log("\n======================================");
     console.log("      INGESTION COMPLETED");
     console.log("======================================");
 
-    console.log(`Total Dataset Size    : ${result.total}`);
-    console.log(`Batch Processed       : ${records.length}`);
+    console.log(`Total Dataset Size  : ${totalRecords}`);
+    console.log(`Processed Records   : ${stats.processedRecords}`);
+    console.log(`Execution Time      : ${executionTime} sec`);
 
-    console.log(`New Stations          : ${newStations}`);
-    console.log(`Existing Stations     : ${existingStations}`);
+    console.log("--------------------------------------");
 
-    console.log(`New Readings          : ${newReadings}`);
-    console.log(`Duplicate Readings    : ${duplicateReadings}`);
+    console.log(`Cache Hits          : ${stats.cacheHits}`);
+    console.log(`Database Hits       : ${stats.databaseHits}`);
+    console.log(`Stations Created    : ${stats.stationsCreated}`);
+
+    console.log("--------------------------------------");
+
+    console.log(`New Readings        : ${stats.newReadings}`);
+    console.log(`Duplicate Readings  : ${stats.duplicateReadings}`);
 
     console.log("======================================\n");
 
