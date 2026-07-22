@@ -1,5 +1,7 @@
 import prisma from "../config/database.js";
 
+import stationCache from "../utils/stationCache.js";
+
 export const findStation = async (stationData) => {
   return await prisma.station.findUnique({
     where: {
@@ -20,19 +22,51 @@ export const createStation = async (stationData) => {
 };
 
 export const findOrCreateStation = async (stationData) => {
-  const existingStation = await findStation(stationData);
 
-  if (existingStation) {
+  const cacheKey = [
+    stationData.stationName,
+    stationData.agency,
+    stationData.latitude,
+    stationData.longitude,
+  ].join("|");
+
+  // -------------------------
+  // Check Cache
+  // -------------------------
+  if (stationCache.has(cacheKey)) {
     return {
-      station: existingStation,
+      station: stationCache.get(cacheKey),
       created: false,
+      source: "CACHE",
     };
   }
 
+  // -------------------------
+  // Check Database
+  // -------------------------
+  const existingStation = await findStation(stationData);
+
+  if (existingStation) {
+
+    stationCache.set(cacheKey, existingStation);
+
+    return {
+      station: existingStation,
+      created: false,
+      source: "DATABASE",
+    };
+  }
+
+  // -------------------------
+  // Create New Station
+  // -------------------------
   const newStation = await createStation(stationData);
+
+  stationCache.set(cacheKey, newStation);
 
   return {
     station: newStation,
     created: true,
+    source: "CREATED",
   };
 };

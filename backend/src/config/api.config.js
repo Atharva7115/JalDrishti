@@ -7,7 +7,7 @@ const API_CONFIG = {
 
     defaultState: process.env.DEFAULT_STATE,
 
-    defaultBatchSize: Number(process.env.NWDP_BATCH_SIZE) || 1000,
+    batchSize: Number(process.env.NWDP_BATCH_SIZE) || 1000,
 
     timeout: 30000,
   },
