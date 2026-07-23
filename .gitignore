@@ -58,3 +58,10 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+.env
+backend/.env
+ml-service/.env
+ml-service/venv/
+**/__pycache__/
+ml-service/models/*.csv
+ml-service/models/*.png
