@@ -22,9 +22,9 @@ enum AlertSeverity {
 }
 
 enum IngestionStatus {
-  SUCCESS
+  RUNNING
+  COMPLETED
   FAILED
-  PARTIAL
 }
 
 model User {
@@ -176,17 +176,20 @@ model Alert {
 
 model IngestionLog {
 
-  id                  String   @id @default(uuid())
+  id                String            @id @default(uuid())
 
-  startedAt           DateTime
+  startedAt         DateTime          @default(now())
 
-  completedAt         DateTime?
+  completedAt       DateTime?
 
-  recordsFetched      Int
+  recordsFetched    Int               @default(0)
 
-  recordsInserted     Int
+  recordsInserted   Int               @default(0)
 
-  status              IngestionStatus
+  lastOffset        Int               @default(0)
 
-  message             String?
+  status            IngestionStatus   @default(RUNNING)
+
+  message           String?
+
 }

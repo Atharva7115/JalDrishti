@@ -15,7 +15,16 @@ import {
   findOrCreateReading,
 } from "../repositories/reading.repository.js";
 
+import {
+  getIncompleteIngestion,
+  createIngestionLog,
+  updateIngestionProgress,
+  markIngestionCompleted,
+  markIngestionFailed,
+} from "../repositories/ingestionLog.repository.js";
+
 export const ingestGroundwaterData = async () => {
+  let log;
   try {
     // ==========================================
     // Start Timer
@@ -34,7 +43,6 @@ export const ingestGroundwaterData = async () => {
 
     let offset = 0;
     let totalRecords = 0;
-    let batchNumber = 1;
 
     const stats = {
       cacheHits: 0,
@@ -45,11 +53,33 @@ export const ingestGroundwaterData = async () => {
       processedRecords: 0,
     };
 
+    const runningLog = await getIncompleteIngestion();
+
+    if (runningLog) {
+      log = runningLog;
+      offset = log.lastOffset;
+      stats.processedRecords = log.recordsFetched;
+      stats.newReadings = log.recordsInserted;
+
+      console.log("--------------------------------------");
+      console.log("Resuming Previous Ingestion");
+      console.log(`Offset : ${offset}`);
+      console.log("--------------------------------------");
+    } else {
+      log = await createIngestionLog();
+      offset = 0;
+
+      console.log("--------------------------------------");
+      console.log("Starting New Ingestion");
+      console.log("--------------------------------------");
+    }
+
     // ==========================================
     // Phase 2 : Batch Processing
     // ==========================================
 
     do {
+      const batchNumber = Math.floor(offset / batchSize) + 1;
       const result = await fetchGroundwaterData(batchSize, offset);
 
       const records = result.records;
@@ -135,13 +165,25 @@ export const ingestGroundwaterData = async () => {
       console.log("");
 
       offset += records.length;
-      batchNumber++;
+
+      await updateIngestionProgress(log.id, {
+        lastOffset: offset,
+        recordsFetched: stats.processedRecords,
+        recordsInserted: stats.newReadings,
+        message: `Completed Batch ${batchNumber}`,
+      });
 
     } while (offset < totalRecords);
 
     // ==========================================
     // Phase 3 : Final Summary
     // ==========================================
+
+    await markIngestionCompleted(log.id, {
+      lastOffset: offset,
+      recordsFetched: stats.processedRecords,
+      recordsInserted: stats.newReadings,
+    });
 
     const executionTime = (
       (Date.now() - startTime) / 1000
@@ -170,6 +212,13 @@ export const ingestGroundwaterData = async () => {
 
   } catch (error) {
     console.error("Ingestion Failed:", error.message);
+    if (log && log.id) {
+      try {
+        await markIngestionFailed(log.id, error.message);
+      } catch (failedError) {
+        console.error("Failed to mark ingestion as failed:", failedError.message);
+      }
+    }
     throw error;
   }
 };
