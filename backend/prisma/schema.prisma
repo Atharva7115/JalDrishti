@@ -75,6 +75,11 @@ model Station {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
+  aquiferTypeId       String?
+  aquiferType         AquiferType?     @relation(fields: [aquiferTypeId], references: [id], onDelete: SetNull)
+  assessmentUnitId    String?
+  assessmentUnit      AssessmentUnit?  @relation(fields: [assessmentUnitId], references: [id], onDelete: SetNull)
+
   readings            GroundwaterReading[]
   forecasts           Forecast[]
   rechargeResults     RechargeResult[]
@@ -192,4 +197,56 @@ model IngestionLog {
 
   message           String?
 
+}
+
+enum AssessmentCategory {
+  SAFE
+  SEMI_CRITICAL
+  CRITICAL
+  OVER_EXPLOITED
+}
+
+model AquiferType {
+  id                String    @id @default(uuid())
+  name              String    @unique
+  geologyCode       String?
+  description       String?
+  specificYield     Float
+  minSpecificYield  Float
+  maxSpecificYield  Float
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  stations          Station[]
+}
+
+model AssessmentUnit {
+  id                String           @id @default(uuid())
+  state             String
+  district          String
+  taluka            String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  stations          Station[]
+  assessments       AssessmentData[]
+
+  @@unique([state, district, taluka])
+}
+
+model AssessmentData {
+  id                String             @id @default(uuid())
+  assessmentUnitId  String
+  assessmentUnit    AssessmentUnit     @relation(fields: [assessmentUnitId], references: [id], onDelete: Cascade)
+  year              Int
+  annualRecharge    Float
+  annualExtraction  Float
+  stageOfExtraction Float
+  area              Float?
+  category          AssessmentCategory
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@unique([assessmentUnitId, year])
+  @@index([assessmentUnitId])
 }

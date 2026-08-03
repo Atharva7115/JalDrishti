@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import healthRoutes from "./routes/health.routes.js";
+import ingestionRoutes from "./routes/ingestion.routes.js";
+import stationRoutes from "./routes/station.routes.js";
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 */
 
 app.use("/health", healthRoutes);
+app.use("/api/ingestion", ingestionRoutes);
+app.use("/stations", stationRoutes);
 
 /*
 |--------------------------------------------------------------------------

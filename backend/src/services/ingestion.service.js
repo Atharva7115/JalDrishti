@@ -11,6 +11,8 @@ import {
   findOrCreateStation,
 } from "../repositories/station.repository.js";
 
+import { enrichStationMetadata } from "./metadataEnrichment.service.js";
+
 import {
   findOrCreateReading,
 } from "../repositories/reading.repository.js";
@@ -114,6 +116,9 @@ export const ingestGroundwaterData = async () => {
             station,
             source,
           } = await findOrCreateStation(stationData);
+
+          // Enrich station metadata with Aquifer Type and Assessment Unit
+          await enrichStationMetadata(station);
 
           switch (source) {
             case "CACHE":
