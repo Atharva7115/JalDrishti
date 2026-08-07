@@ -1,6 +1,3 @@
-"""
-classification/classification.py — GEC classification, rule-based.
-"""
 from recharge.recharge_calculation import calculate_recharge
 
 THRESHOLDS = {
@@ -18,10 +15,9 @@ def classify_stage(stage_pct: float) -> str:
     return "Unknown"
 
 
-def classify_station(station_id: str, annual_extraction_m3: float) -> dict:
-    """annual_extraction_m3 must come from an extraction dataset/estimate —
-    it is NOT derivable from water-level readings alone."""
-    recharge = calculate_recharge(station_id)
+def classify_station(station_id: str, annual_extraction_m3: float,
+                      official_annual_recharge_m3: float = None) -> dict:
+    recharge = calculate_recharge(station_id, official_annual_recharge_m3=official_annual_recharge_m3)
     latest = recharge["yearly"][-1] if recharge["yearly"] else None
     if not latest or latest["recharge_m3"] == 0:
         return {"station_id": station_id, "classification": "Unknown", "reason": "insufficient recharge data"}
@@ -32,5 +28,6 @@ def classify_station(station_id: str, annual_extraction_m3: float) -> dict:
         "stage_of_extraction_pct": stage_pct,
         "classification": classify_stage(stage_pct),
         "recharge_m3": latest["recharge_m3"],
+        "recharge_source": latest["source"],
         "year": latest["year"],
     }
