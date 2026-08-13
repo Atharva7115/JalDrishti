@@ -65,3 +65,4 @@ ml-service/venv/
 **/__pycache__/
 ml-service/models/*.csv
 ml-service/models/*.png
+data/gsda/*.pdf

@@ -4,7 +4,7 @@ No cleaning, no ML here — that belongs in cleaning/ and forecasting/.
 """
 import pandas as pd
 from utils.config import USE_DB, COLUMN_MAP
-from extraction.Db import fetch_table
+from extraction.db import fetch_table
 
 
 def load_all(use_csv: bool = False):
