@@ -1,5 +1,6 @@
 import cron from "node-cron";
 import { ingestGroundwaterData } from "./ingestion.service.js";
+import { generateAllAlerts } from "./alert.service.js";
 import {
   startIngestionLock,
   releaseIngestionLock,
@@ -28,8 +29,12 @@ export const startScheduler = () => {
     try {
       await ingestGroundwaterData();
       console.log("✅ Scheduled ingestion completed successfully.");
+      
+      console.log("🔔 Triggering Alert Generation...");
+      const alertSummary = await generateAllAlerts();
+      console.log(`✅ Alert generation completed: ${alertSummary.count} active alerts updated.`);
     } catch (error) {
-      console.error("❌ Scheduled ingestion failed.");
+      console.error("❌ Scheduled ingestion/alert generation failed.");
       console.error(error);
     } finally {
       releaseIngestionLock();

@@ -11,4 +11,49 @@ export function ClassificationChart({ stations }) { const data = ['safe', 'semi-
 
 export function MultiMetricChart({ data = chartSummary }) { return <div role="img" aria-label="Groundwater recharge and anomaly trend"><ResponsiveContainer width="100%" height={280}><BarChart data={data}><CartesianGrid strokeDasharray="3 3" stroke="#e4e9ef"/><XAxis dataKey="month"/><YAxis/><Tooltip/><Legend/><Bar dataKey="recharge" name="Recharge estimate" fill="#087e8b" radius={[3,3,0,0]}/><Bar dataKey="anomalies" name="Anomalies" fill="#d89b1d" radius={[3,3,0,0]}/></BarChart></ResponsiveContainer></div>; }
 
-export function Hydrograph({ readings, forecasts = [], showRaw = false, showFilled = true }) { const historical = readings.slice(-12).map((item) => ({ date: new Date(item.timestamp).toLocaleDateString('en-IN', { month: 'short', year: '2-digit' }), cleaned: item.cleanedValue, raw: item.rawValue, filled: item.filledValue })); const future = forecasts.map((item) => ({ date: new Date(item.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }), forecast: item.predictedValue, lower: item.lowerBound, upper: item.upperBound })); const data = [...historical, ...future]; return <div className="chart-wide" role="img" aria-label="Historical groundwater hydrograph with forecast"><ResponsiveContainer width="100%" height={340}><LineChart data={data}><CartesianGrid strokeDasharray="3 3" stroke="#e4e9ef"/><XAxis dataKey="date"/><YAxis reversed unit=" m" label={{ value: 'Depth below ground', angle: -90, position: 'insideLeft' }}/><Tooltip/><Legend/><Line connectNulls type="monotone" dataKey="cleaned" name="Cleaned level" stroke="#1e5a96" strokeWidth={2.5} dot={false}/>{showRaw && <Line connectNulls type="monotone" dataKey="raw" name="Raw level" stroke="#718096" strokeDasharray="4 4" dot={false}/>} {showFilled && <Line connectNulls type="monotone" dataKey="filled" name="Gap-filled" stroke="#087e8b" dot={false}/>}<Line connectNulls type="monotone" dataKey="forecast" name="Forecast" stroke="#7c3aed" strokeWidth={2} strokeDasharray="7 4" dot={false}/></LineChart></ResponsiveContainer></div>; }
+export function Hydrograph({ readings, forecasts = [], showRaw = false, showFilled = true }) {
+  const historical = readings.slice(-60).map((item) => ({
+    date: new Date(item.timestamp).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }),
+    cleaned: item.cleanedValue,
+    raw: item.rawValue,
+    filled: item.filledValue,
+    anomaly: item.isAnomaly ? item.cleanedValue : null,
+    imputed: item.isMissing ? item.filledValue : null,
+  }));
+
+  const future = forecasts.map((item) => ({
+    date: new Date(item.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+    forecast: item.predictedValue,
+    lower: item.lowerBound,
+    upper: item.upperBound,
+  }));
+
+  const data = [...historical, ...future];
+
+  return (
+    <div className="chart-wide" role="img" aria-label="Historical groundwater hydrograph with forecast">
+      <ResponsiveContainer width="100%" height={340}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e4e9ef"/>
+          <XAxis dataKey="date"/>
+          <YAxis reversed unit=" m" label={{ value: 'Depth below ground (m bgl)', angle: -90, position: 'insideLeft' }}/>
+          <Tooltip/>
+          <Legend/>
+          
+          <Line connectNulls type="monotone" dataKey="cleaned" name="Cleaned level" stroke="#1e5a96" strokeWidth={2.5} dot={false}/>
+          {showRaw && <Line connectNulls type="monotone" dataKey="raw" name="Raw level" stroke="#718096" strokeDasharray="4 4" dot={false}/>}
+          {showFilled && <Line connectNulls type="monotone" dataKey="filled" name="Gap-filled" stroke="#087e8b" dot={false}/>}
+          
+          {/* Real ML Forecast and Confidence Intervals */}
+          <Line connectNulls type="monotone" dataKey="forecast" name="Forecast" stroke="#7c3aed" strokeWidth={2} strokeDasharray="7 4" dot={false}/>
+          <Line connectNulls type="monotone" dataKey="lower" name="Lower Bound" stroke="#c084fc" strokeDasharray="3 3" strokeWidth={1} dot={false}/>
+          <Line connectNulls type="monotone" dataKey="upper" name="Upper Bound" stroke="#c084fc" strokeDasharray="3 3" strokeWidth={1} dot={false}/>
+          
+          {/* Highlighted Markers */}
+          <Line connectNulls type="monotone" dataKey="anomaly" name="Anomaly Point" stroke="#ef4444" strokeWidth={0} dot={{ r: 6, stroke: '#ef4444', strokeWidth: 2, fill: '#fca5a5' }}/>
+          <Line connectNulls type="monotone" dataKey="imputed" name="Imputed Point" stroke="#087e8b" strokeWidth={0} dot={{ r: 4, stroke: '#087e8b', strokeWidth: 1.5, fill: '#99f6e4' }}/>
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

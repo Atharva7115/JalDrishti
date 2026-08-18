@@ -6,7 +6,7 @@
  * @param {number|null} areaSqm - Aquifer area in square meters.
  * @returns {Object} FastAPI recharge payload body.
  */
-export const buildRechargePayload = (readings, specificYield, areaSqm) => {
+export const buildRechargePayload = (readings, specificYield, areaSqm, officialAnnualRecharge) => {
   const payload = {
     specific_yield: specificYield !== null && specificYield !== undefined ? Number(specificYield) : 0.02,
     readings: readings.map((r) => ({
@@ -19,6 +19,10 @@ export const buildRechargePayload = (readings, specificYield, areaSqm) => {
 
   if (areaSqm !== null && areaSqm !== undefined) {
     payload.area_sqm = Number(areaSqm);
+  }
+
+  if (officialAnnualRecharge !== null && officialAnnualRecharge !== undefined) {
+    payload.official_annual_recharge_m3 = Number(officialAnnualRecharge);
   }
 
   return payload;

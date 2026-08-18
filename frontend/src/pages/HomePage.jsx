@@ -1,27 +1,56 @@
 import { Activity, AlertTriangle, ArrowRight, BookOpen, CheckCircle2, CloudRain, Database, Droplets, FileBarChart, FlaskConical, Gauge, Landmark, Map, MapPin, RadioTower, Search, ShieldCheck, Sprout, Users, Waves } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { alerts, LAST_SYNC, stations } from '../data/mockData';
-import { AlertCard, classificationMessage, DemoBadge, StatusBadge, SummaryCard } from '../components/common/UI';
+import { useQuery } from '@tanstack/react-query';
+import { groundwaterService } from '../services/groundwater.service';
+import { AlertCard, classificationMessage, DemoBadge, StatusBadge, SummaryCard, LoadingSkeleton } from '../components/common/UI';
 import StationMap from '../components/maps/StationMap';
 
-const overview = [
-  [RadioTower, 'Monitoring stations', stations.length, 'Across 3 demonstration states', 'default'],
-  [Activity, 'Active stations', stations.filter((s) => s.status === 'active').length, 'Reporting within 48 hours', 'default'],
-  [CheckCircle2, 'Safe stations', stations.filter((s) => s.classification === 'safe').length, 'Sustainable range', 'safe'],
-  [Gauge, 'Semi-Critical', stations.filter((s) => s.classification === 'semi-critical').length, 'Careful use advised', 'semi'],
-  [AlertTriangle, 'Critical stations', stations.filter((s) => s.classification === 'critical').length, 'Attention recommended', 'critical'],
-  [Waves, 'Over-Exploited', stations.filter((s) => s.classification === 'over-exploited').length, 'Urgent action required', 'over'],
-  [Map, 'States covered', 3, 'Maharashtra, Rajasthan, MP', 'default'],
-  [Database, 'Last synchronized', '06:00', '14 July 2026 (IST)', 'default'],
-];
+const LAST_SYNC = '15 August 2026, 6:00 AM';
 
 export default function HomePage() {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const submit = (event) => { event.preventDefault(); navigate(`/stations?q=${encodeURIComponent(search)}`); };
+
+  const stationsQuery = useQuery({
+    queryKey: ['stations'],
+    queryFn: () => groundwaterService.getStations(),
+  });
+
+  const alertsQuery = useQuery({
+    queryKey: ['alerts'],
+    queryFn: () => groundwaterService.getAlerts(),
+  });
+
+  const submit = (event) => {
+    event.preventDefault();
+    navigate(`/stations?q=${encodeURIComponent(search)}`);
+  };
+
+  if (stationsQuery.isLoading || alertsQuery.isLoading) {
+    return (
+      <div className="container route-loading" style={{ padding: "40px 0" }}>
+        <LoadingSkeleton rows={5} />
+      </div>
+    );
+  }
+
+  const stations = stationsQuery.data || [];
+  const alerts = alertsQuery.data?.data || [];
+
+  const overview = [
+    [RadioTower, 'Monitoring stations', stations.length, 'Across Maharashtra', 'default'],
+    [Activity, 'Active stations', stations.filter((s) => s.status === 'active').length, 'Reporting within 48 hours', 'default'],
+    [CheckCircle2, 'Safe stations', stations.filter((s) => s.classification === 'safe').length, 'Sustainable range', 'safe'],
+    [Gauge, 'Semi-Critical', stations.filter((s) => s.classification === 'semi-critical').length, 'Careful use advised', 'semi'],
+    [AlertTriangle, 'Critical stations', stations.filter((s) => s.classification === 'critical').length, 'Attention recommended', 'critical'],
+    [Waves, 'Over-Exploited', stations.filter((s) => s.classification === 'over-exploited').length, 'Urgent action required', 'over'],
+    [Map, 'States covered', 1, 'Maharashtra', 'default'],
+    [Database, 'Last synchronized', '06:00', '15 August 2026 (IST)', 'default'],
+  ];
+
   return <>
-    <section className="home-hero"><div className="container hero-grid"><div className="hero-copy"><DemoBadge /><span className="eyebrow">National groundwater information</span><h1>Know the Groundwater Condition in Your Area</h1><p>Access groundwater status, trends, forecasts, recharge estimates, and early warnings using Digital Water Level Recorder data.</p><form className="hero-search" onSubmit={submit}><Search aria-hidden="true" /><label className="sr-only" htmlFor="home-search">Search by village, district, state, PIN code, or station</label><input id="home-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Village, district, state, PIN code, or station"/><button type="submit">Check Groundwater Status</button></form><div className="hero-actions"><Link className="button button-secondary" to="/public-status"><MapPin size={18}/> Check My Area</Link><Link className="button button-outline" to="/map"><Map size={18}/> Explore National Map</Link></div><p className="sync-line"><Database size={15}/> Last data synchronization: {LAST_SYNC}</p></div><div className="hero-data" aria-label="National groundwater briefing"><div className="briefing-head"><span>National briefing</span><strong>14 July 2026</strong></div><div className="water-depth"><Droplets/><div><span>Average monitored depth</span><strong>10.8 <small>m bgl</small></strong><p>0.4 m deeper than last month</p></div></div><div className="briefing-row"><span>Station availability</span><strong>91%</strong></div><div className="briefing-row"><span>Active priority alerts</span><strong>{alerts.filter((a) => ['critical','high'].includes(a.severity)).length}</strong></div><div className="briefing-note"><ShieldCheck size={18}/><span>Decision-support information<br/><small>Not a regulatory declaration</small></span></div></div></div></section>
+    <section className="home-hero"><div className="container hero-grid"><div className="hero-copy"><DemoBadge /><span className="eyebrow">National groundwater information</span><h1>Know the Groundwater Condition in Your Area</h1><p>Access groundwater status, trends, forecasts, recharge estimates, and early warnings using Digital Water Level Recorder data.</p><form className="hero-search" onSubmit={submit}><Search aria-hidden="true" /><label className="sr-only" htmlFor="home-search">Search by village, district, state, PIN code, or station</label><input id="home-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Village, district, state, PIN code, or station"/><button type="submit">Check Groundwater Status</button></form><div className="hero-actions"><Link className="button button-secondary" to="/public-status"><MapPin size={18}/> Check My Area</Link><Link className="button button-outline" to="/map"><Map size={18}/> Explore National Map</Link></div><p className="sync-line"><Database size={15}/> Last data synchronization: {LAST_SYNC}</p></div><div className="hero-data" aria-label="National groundwater briefing"><div className="briefing-head"><span>National briefing</span><strong>15 August 2026</strong></div><div className="water-depth"><Droplets/><div><span>Average monitored depth</span><strong>10.8 <small>m bgl</small></strong><p>0.4 m deeper than last month</p></div></div><div className="briefing-row"><span>Station availability</span><strong>91%</strong></div><div className="briefing-row"><span>Active priority alerts</span><strong>{alerts.filter((a) => ['critical','high'].includes(a.severity)).length}</strong></div><div className="briefing-note"><ShieldCheck size={18}/><span>Decision-support information<br/><small>Not a regulatory declaration</small></span></div></div></div></section>
     <section className="page-section"><div className="container"><div className="section-head"><div><span className="eyebrow">National overview</span><h2>Groundwater monitoring at a glance</h2><p>A current summary of the demonstration monitoring network.</p></div><DemoBadge /></div><div className="summary-grid">{overview.map(([icon,label,value,support,tone]) => <SummaryCard key={label} icon={icon} label={label} value={value} support={support} tone={tone}/>)}</div></div></section>
     <section className="page-section page-section-white"><div className="container"><div className="section-head"><div><span className="eyebrow">Explore geographically</span><h2>Groundwater monitoring map</h2><p>View classification and station status across the demonstration states.</p></div><Link className="button button-outline" to="/map">View full map <ArrowRight size={17}/></Link></div><StationMap compact stations={stations}/></div></section>
     <section className="page-section"><div className="container"><div className="section-head"><div><span className="eyebrow">Understanding status</span><h2>What do the classifications mean?</h2><p>Classification combines recharge and groundwater extraction indicators.</p></div></div><div className="condition-grid">{['safe','semi-critical','critical','over-exploited'].map((status) => <article className={`condition-card condition-${status}`} key={status}><StatusBadge status={status}/><p>{classificationMessage[status]}</p><strong>{status === 'safe' ? 'Continue efficient water use.' : status === 'semi-critical' ? 'Avoid additional extraction.' : status === 'critical' ? 'Prioritize conservation measures.' : 'Implement urgent recharge and demand controls.'}</strong></article>)}</div></div></section>

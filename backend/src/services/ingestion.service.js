@@ -23,6 +23,7 @@ import {
   updateIngestionProgress,
   markIngestionCompleted,
   markIngestionFailed,
+  resetIngestionToRunning,
 } from "../repositories/ingestionLog.repository.js";
 
 export const ingestGroundwaterData = async () => {
@@ -62,6 +63,12 @@ export const ingestGroundwaterData = async () => {
       offset = log.lastOffset;
       stats.processedRecords = log.recordsFetched;
       stats.newReadings = log.recordsInserted;
+
+      // If the previous run crashed (FAILED) reset to RUNNING so the
+      // next crash can also pick it up and resume from the new checkpoint.
+      if (log.status === "FAILED") {
+        await resetIngestionToRunning(log.id);
+      }
 
       console.log("--------------------------------------");
       console.log("Resuming Previous Ingestion");

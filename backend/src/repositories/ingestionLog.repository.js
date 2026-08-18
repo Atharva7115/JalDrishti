@@ -12,13 +12,29 @@ export const getLatestIngestionLog = async () => {
 };
 
 /**
- * Returns the latest incomplete ingestion.
+ * Returns the latest resumable ingestion.
  * Used for Resume Support.
+ *
+ * Resumes from:
+ *   - RUNNING  → server was live but process was interrupted mid-batch
+ *   - FAILED   → network error (ECONNRESET) crashed NWDP fetch, but
+ *                 lastOffset was already checkpointed after the last
+ *                 successful batch, so we can continue from there.
+ *
+ * A FAILED log is only resumable if lastOffset > 0 (it actually made
+ * some progress). A fresh FAILED log at offset 0 is ignored so we
+ * don't loop on a permanent error.
  */
 export const getIncompleteIngestion = async () => {
   return prisma.ingestionLog.findFirst({
     where: {
-      status: "RUNNING",
+      OR: [
+        { status: "RUNNING" },
+        {
+          status: "FAILED",
+          lastOffset: { gt: 0 },   // only resume if progress was made
+        },
+      ],
     },
     orderBy: {
       startedAt: "desc",
@@ -104,6 +120,22 @@ export const markIngestionFailed = async (
       completedAt: new Date(),
       status: "FAILED",
       message: errorMessage,
+    },
+  });
+};
+
+/**
+ * Resets a FAILED ingestion back to RUNNING so it can be resumed.
+ * Called at the start of each resume attempt to ensure future crashes
+ * are also resumable from the updated checkpoint.
+ */
+export const resetIngestionToRunning = async (logId) => {
+  return prisma.ingestionLog.update({
+    where: { id: logId },
+    data: {
+      status: "RUNNING",
+      completedAt: null,
+      message: "Resumed after previous failure.",
     },
   });
 };

@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.19.3",
+    "@turf/turf": "^7.4.0",
     "axios": "^1.18.1",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",

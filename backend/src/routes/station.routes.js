@@ -3,6 +3,10 @@ import * as stationController from "../controllers/station.controller.js";
 
 const router = Router();
 
+router.get("/", stationController.getAllStations);
+router.get("/:id", stationController.getStationDetails);
+router.get("/:id/readings", stationController.getReadings);
+
 router.get("/:stationId/forecast", stationController.getForecast);
 router.post("/:stationId/recharge", stationController.calculateRecharge);
 router.post("/:stationId/classify", stationController.classifyStation);

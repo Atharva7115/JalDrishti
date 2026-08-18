@@ -67,39 +67,92 @@ function parseCsv(content) {
   });
 }
 
+const DISTRICT_ALIASES = {
+  "ahmednagar": "ahmadnagar",
+  "buldhana": "buldana",
+  "sindhudurg": "sindudurg",
+  "yawatmal": "yavatmal",
+};
+
 async function seedAssessmentDataFromGsda(prismaInstance, csvPath = "gsda_matched_review.csv") {
-  const fullPath = path.resolve(csvPath);
+  let fullPath = path.resolve(csvPath);
+  console.log(`🔍 Checking for GSDA CSV at primary path: ${fullPath}`);
+
   if (!fs.existsSync(fullPath)) {
-    console.log(`⚠️  ${fullPath} not found -- skipping GSDA AssessmentData seed.`);
-    return;
+    const fallbackPath = path.resolve("../ml-service", csvPath);
+    console.log(`⚠️  Primary path not found. Checking fallback path: ${fallbackPath}`);
+    if (fs.existsSync(fallbackPath)) {
+      fullPath = fallbackPath;
+    } else {
+      console.log(`❌ GSDA CSV file not found at either path -- skipping GSDA AssessmentData seed.`);
+      return;
+    }
   }
 
-  const rows = parseCsv(fs.readFileSync(fullPath, "utf-8"));
-  console.log(`🌱 Read ${rows.length} rows from ${csvPath}`);
+  console.log(`📂 Using GSDA CSV path: ${fullPath}`);
+  const fileContent = fs.readFileSync(fullPath, "utf-8");
+  const rows = parseCsv(fileContent);
+  console.log(`🌱 Total rows read from CSV: ${rows.length}`);
 
-  let imported = 0, skipped = 0;
+  // Fetch all current AssessmentUnits from database to map names to actual UUIDs
+  const units = await prismaInstance.assessmentUnit.findMany();
+  const unitMap = new Map();
+  units.forEach((u) => {
+    const key = `maharashtra|${u.district.toLowerCase()}|${u.taluka.toLowerCase()}`;
+    unitMap.set(key, u.id);
+  });
+
+  let matchedProcessed = 0;
+  let imported = 0;
+  let skipped = 0;
+
   for (const row of rows) {
     if (row.status !== "matched" || row.category_raw === "salinity") {
       skipped++;
       continue;
     }
+
     const category = CATEGORY_MAP[row.category_raw];
     if (!category) {
       skipped++;
       continue;
     }
+
+    // Resolve AssessmentUnit ID dynamically
+    const rawDistrict = row.district.toLowerCase();
+    const mappedDistrict = DISTRICT_ALIASES[rawDistrict] || rawDistrict;
+    const mappedTaluka = row.matched_taluka_in_db.toLowerCase();
+    const key = `maharashtra|${mappedDistrict}|${mappedTaluka}`;
+    const resolvedUnitId = unitMap.get(key);
+
+    if (!resolvedUnitId) {
+      console.log(`⚠️  Could not find active AssessmentUnit for ${row.district} / ${row.matched_taluka_in_db} in database (skipped).`);
+      skipped++;
+      continue;
+    }
+
+    matchedProcessed++;
+
     await seedAssessmentDataPlaceholder(prismaInstance, {
-      assessmentUnitId: row.assessment_unit_id,
+      assessmentUnitId: resolvedUnitId,
       year: REPORT_YEAR,
-      annualRecharge: Number(row.annual_recharge_ham),
-      annualExtraction: Number(row.annual_extraction_ham),
+      // Convert ham to m3 by multiplying by 10,000
+      annualRecharge: Number(row.annual_recharge_ham) * 10000,
+      annualExtraction: Number(row.annual_extraction_ham) * 10000,
       stageOfExtraction: Number(row.stage_of_extraction_pct),
       area: row.area_ha ? Number(row.area_ha) * 10000 : null,
       category,
     });
     imported++;
   }
-  console.log(`✅ Imported ${imported} AssessmentData records (skipped ${skipped}).`);
+
+  const finalCount = await prismaInstance.assessmentData.count();
+
+  console.log(`✅ Seeding complete:`);
+  console.log(`  - Matched rows processed: ${matchedProcessed}`);
+  console.log(`  - Rows successfully upserted: ${imported}`);
+  console.log(`  - Rows skipped (unmatched/salinity/invalid/missing unit): ${skipped}`);
+  console.log(`  - Final AssessmentData count in database: ${finalCount}`);
 }
 
 async function main() {

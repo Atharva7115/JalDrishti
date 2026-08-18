@@ -1,5 +1,14 @@
 import prisma from "../config/database.js";
 import AQUIFER_MAPPING from "../config/aquiferMapping.js";
+import { resolveStationAssessmentUnit } from "./adminBoundaryResolver.service.js";
+
+/**
+ * In-memory set of station IDs that have already been attempted for GIS
+ * resolution and failed (AU_NOT_FOUND). Prevents re-running the expensive
+ * 307-polygon PIP scan on every reading for the same unresolvable station.
+ * Cleared on server restart.
+ */
+const _gisResolutionFailed = new Set();
 
 /**
  * Enriches a station with its corresponding AssessmentUnit and AquiferType.
@@ -20,7 +29,7 @@ export const enrichStationMetadata = async (station) => {
 
     // Performance Optimization: Skip database lookups if both are already mapped
     if (hasUnit && hasAquifer) {
-      console.log(`ℹ️ [Metadata Enrichment] Station "${station.stationName}" is already fully mapped. Skipping.`);
+      // Silenced to prevent loop print flooding: console.log(`ℹ️ [Metadata Enrichment] Station "${station.stationName}" is already fully mapped. Skipping.`);
       return station;
     }
 
@@ -31,6 +40,7 @@ export const enrichStationMetadata = async (station) => {
       const taluka = getTalukaName(station);
 
       if (station.state && station.district && taluka) {
+        // Tier 1: Direct tehsil/block DB match
         const state = station.state.trim();
         const district = station.district.trim();
 
@@ -55,7 +65,30 @@ export const enrichStationMetadata = async (station) => {
           console.error(`❌ [Metadata Enrichment] Error querying AssessmentUnit:`, dbErr.message);
         }
       } else {
-        console.log(`ℹ️ [Metadata Enrichment] Insufficient admin details to resolve AssessmentUnit for Station "${station.stationName}".`);
+        // Tier 2: No tehsil/block — use GIS coordinate resolver
+        // Skip if we already tried and failed for this station this session
+        if (_gisResolutionFailed.has(station.id)) {
+          // Silently skip — already attempted, won't succeed until AssessmentUnit seed is expanded
+        } else {
+          try {
+            const mappedStations = await prisma.station.findMany({
+              where: { NOT: { assessmentUnitId: null } },
+              include: { assessmentUnit: true }
+            });
+            const geoResult = await resolveStationAssessmentUnit(station, mappedStations);
+            if (geoResult.resolved) {
+              updatedFields.assessmentUnitId = geoResult.assessmentUnitId;
+              console.log(`✨ [Metadata Enrichment] GIS resolved Station "${station.stationName}" → Taluka="${geoResult.detectedTaluka}" [${geoResult.method}]`);
+            } else {
+              // Mark as failed so we don't retry on every reading
+              _gisResolutionFailed.add(station.id);
+            }
+            // If not resolved, silently continue — non-blocking
+          } catch (geoErr) {
+            _gisResolutionFailed.add(station.id);
+            // GIS resolution is non-blocking
+          }
+        }
       }
     }
 
@@ -84,7 +117,7 @@ export const enrichStationMetadata = async (station) => {
           console.log(`⚠️ [Metadata Enrichment] AquiferType not found in mapping config for district: "${station.district}"`);
         }
       } else {
-        console.log(`ℹ️ [Metadata Enrichment] District field is empty. Cannot resolve AquiferType for Station "${station.stationName}".`);
+        // Silenced to prevent loop print flooding: console.log(`ℹ️ [Metadata Enrichment] District field is empty. Cannot resolve AquiferType for Station "${station.stationName}".`);
       }
     }
 

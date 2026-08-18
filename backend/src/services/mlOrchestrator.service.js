@@ -127,12 +127,17 @@ export const orchestrateRecharge = async (stationId) => {
     ? Number(station.aquiferType.specificYield)
     : 0.02;
 
-  // 3. Resolve Area from latest AssessmentData (convert km2 to m2, pass null if missing)
+  // 3. Resolve Area from latest AssessmentData (already in m2, pass null if missing)
   const latestAssessment = station.assessmentUnit?.assessments?.[0];
   let areaSqm = null;
   if (latestAssessment && latestAssessment.area !== null && latestAssessment.area !== undefined) {
-    areaSqm = Number(latestAssessment.area) * 1000000;
+    areaSqm = Number(latestAssessment.area);
   }
+
+  // 3b. Resolve official recharge from latest AssessmentData (already in m3)
+  const officialRecharge = latestAssessment && latestAssessment.annualRecharge !== null && latestAssessment.annualRecharge !== undefined
+    ? Number(latestAssessment.annualRecharge)
+    : null;
 
   // 4. Fetch readings sorted chronologically
   const readings = await prisma.groundwaterReading.findMany({
@@ -146,8 +151,8 @@ export const orchestrateRecharge = async (stationId) => {
     throw error;
   }
 
-  // 5. Build request payload
-  const payload = buildRechargePayload(readings, specificYield, areaSqm);
+  // 5. Build request payload passing officialRecharge
+  const payload = buildRechargePayload(readings, specificYield, areaSqm, officialRecharge);
 
   // 6. Call FastAPI ML service
   const mlResult = await mlService.recharge(payload);
@@ -189,8 +194,18 @@ export const orchestrateRecharge = async (stationId) => {
   await Promise.all(savePromises);
   const dbDuration = Date.now() - dbStart;
 
+  const isOfficial = rechargeRecords.some((item) => item.source === "official_gsda");
+  const mappedYearly = rechargeRecords.map((item) => ({
+    year: Number(item.year),
+    water_table_rise_m: Number(item.water_table_rise_m),
+    recharge_m3: Number(item.recharge_m3),
+    estimated_recharge_m3: item.estimated_recharge_m3 !== null && item.estimated_recharge_m3 !== undefined ? Number(item.estimated_recharge_m3) : null,
+    source: item.source === "official_gsda" ? "official" : "estimated",
+  }));
+
   return {
-    yearly: rechargeRecords,
+    yearly: mappedYearly,
+    source: isOfficial ? "official" : "estimated",
     mlDurationMs: mlResult.durationMs,
     dbSaveTimeMs: dbDuration,
   };

@@ -1,4 +1,5 @@
 import * as mlOrchestratorService from "../services/mlOrchestrator.service.js";
+import * as stationService from "../services/station.service.js";
 
 /**
  * Controller to handle REST requests for station ML analyses.
@@ -70,6 +71,7 @@ export const calculateRecharge = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: {
+        source: result.source,
         yearly: result.yearly,
       },
       metrics: {
@@ -207,6 +209,79 @@ export const fillGaps = async (req, res) => {
       success: false,
       message: error.message || "Failed to fill timeseries data gaps.",
       details: error.data || null,
+    });
+  }
+};
+
+/**
+ * GET /stations
+ */
+export const getAllStations = async (req, res) => {
+  const page = req.query.page ? Number(req.query.page) : 1;
+  const limit = req.query.limit ? Number(req.query.limit) : 10;
+  const search = req.query.search || "";
+
+  try {
+    const result = await stationService.getStations({ page, limit, search });
+    return res.status(200).json({
+      success: true,
+      data: result.stations,
+      pagination: result.pagination,
+    });
+  } catch (error) {
+    console.error("GET /stations failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve stations list.",
+    });
+  }
+};
+
+/**
+ * GET /stations/:id
+ */
+export const getStationDetails = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await stationService.getStationById(id);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "Station not found.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.error(`GET /stations/${id} failed:`, error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve station details.",
+    });
+  }
+};
+
+/**
+ * GET /stations/:id/readings
+ */
+export const getReadings = async (req, res) => {
+  const { id } = req.params;
+  const { from, to, limit } = req.query;
+
+  try {
+    const result = await stationService.getStationReadings(id, { from, to, limit });
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.error(`GET /stations/${id}/readings failed:`, error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve station readings.",
     });
   }
 };

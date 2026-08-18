@@ -1,0 +1,1404 @@
+{
+  "summary": {
+    "total": 1449,
+    "mapped": 1042,
+    "unmapped": 407,
+    "categories": {
+      "A_TALUKA_NOT_IN_AU": 356,
+      "B_DISTRICT_NOT_IN_AU": 3,
+      "D_NA_GEOJSON": 44,
+      "X_SHOULD_BE_MAPPED": 4
+    }
+  },
+  "missingTalukas": [
+    {
+      "district": "Solapur",
+      "taluka": "Malsiras",
+      "stations": [
+        "Anadnagar",
+        "Babhulgaon_2",
+        "Baghechiwadi",
+        "Bhamb_1",
+        "Bhamburdi",
+        "Borgaon_2",
+        "Chakore, Pratapnagar",
+        "Choundeshewarwadi",
+        "Deshmukhwadi_1",
+        "Dharmpuri_2",
+        "Dombalwadi (Ku)",
+        "Dombhalwadi (Khu)",
+        "Girzani",
+        "Goradwadi_1",
+        "Gursale_1",
+        "Hanumanwadi",
+        "Islampur_3",
+        "Jadhavwadi_1",
+        "Jalbhavi",
+        "Jambud_1",
+        "Kachrewadi",
+        "Kanher_2",
+        "Karunde",
+        "Khandali, Dattanagar",
+        "Khudus",
+        "Kondbhavi (Vatpali), Watpali",
+        "Kondharpatta",
+        "Kurbavi",
+        "Lawang",
+        "Mahalung_1",
+        "Malewadi (Bo)",
+        "Malewadi_1",
+        "Malinagar",
+        "Malkhambi",
+        "Manaki_1",
+        "Medad",
+        "Mire_1",
+        "Motewadi",
+        "Nevare",
+        "Paniv",
+        "Pisewadi",
+        "Purandavade",
+        "Rede_1",
+        "Sangramnagar",
+        "Shindhewadi",
+        "Tambve",
+        "Tirwandi",
+        "Ughadewadi",
+        "Umbre Dahigaon",
+        "Umbre Velapur",
+        "Velapur_1",
+        "Vijaywadi",
+        "Vitthalwadi_2",
+        "Vizhori",
+        "Wafegaon",
+        "Wagholi_3",
+        "Yashwantnagar_1",
+        "Yeliv",
+        "Zunjewadi"
+      ]
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Kavathe Mahankal",
+      "stations": [
+        "Agalgaon_1",
+        "Alkud (S)",
+        "Alkud(M)",
+        "Arewadi_1",
+        "Banewadi",
+        "Bassappachi Wadi",
+        "Borgaon_2",
+        "Deshing",
+        "Dhalewadi",
+        "Dhulgaon_1",
+        "Garjewadi",
+        "Haroli_1",
+        "Hingangaon_1",
+        "Irali_1",
+        "Jadhavwadi",
+        "Jakhapur",
+        "Jaygavan",
+        "Karalhetti(Nv)",
+        "Karoli T",
+        "Kerewadi",
+        "Kharshing",
+        "Kognole",
+        "Kokale",
+        "Kuchi",
+        "Kuchi_3",
+        "Kudnur",
+        "Kuktoli",
+        "Kundlapur",
+        "Langarpeth",
+        "Lonarwadi_1",
+        "Malangaon_2",
+        "Mhaisal(M)",
+        "Moghamwadi",
+        "Morgaon_1",
+        "Nangole",
+        "Narsinghgaon (Landagewadi)",
+        "Pimpalwadi_1",
+        "Rajani_1",
+        "Rampurewadi",
+        "Sarati_1",
+        "Shelkewadi",
+        "Shendagewadi",
+        "Shirdhon_1",
+        "Sindewadi (H)",
+        "Thabadewadi",
+        "Vithurayachiwadi",
+        "Zurewadi"
+      ]
+    },
+    {
+      "district": "Jalgaon",
+      "taluka": "Yaval",
+      "stations": [
+        "Amode_1",
+        "Anjale",
+        "Atrawal_1",
+        "Bamnod",
+        "Bhalod",
+        "Borale",
+        "Borawal Bk",
+        "Borawal Kh",
+        "Borkheda Bk",
+        "Chikhali Bk",
+        "Chikhali Kh_1",
+        "Chitode",
+        "Chunchale",
+        "Dahigaon_1",
+        "Dongarkathora",
+        "Giradgaon",
+        "Hambardi",
+        "Hingone_1",
+        "Kingaon Bk",
+        "Kolwad_1",
+        "Korpavli",
+        "Mahelkhedi",
+        "Marul_1",
+        "Mhaiswadi",
+        "Mohrala",
+        "Naigaon_1",
+        "Navre",
+        "Nhavi Pr Yawal",
+        "Nimgaon_1",
+        "Padalse_1",
+        "Parsade Bk",
+        "Rajore_1",
+        "Sangvi Bk_1",
+        "Sangvi Kh",
+        "Satod Pr Yawal",
+        "Savkhede sim",
+        "Vadhode PrYawal",
+        "Vadri Kh",
+        "Vaghazira",
+        "Viravali",
+        "Virode"
+      ]
+    },
+    {
+      "district": "Pune",
+      "taluka": "Sasvad",
+      "stations": [
+        "Ambale_2",
+        "Ambodi_1",
+        "Askarwadi",
+        "Belsar_2",
+        "Bhivari",
+        "Bhosalewadi",
+        "Bopgaon",
+        "Chambali",
+        "Dive_1",
+        "Ekhatpur",
+        "Gurholi",
+        "Hivare",
+        "Khanvadi",
+        "Kothale",
+        "Kumbharvalan",
+        "Malshiras_1",
+        "Mawadi Kade Pathar",
+        "Mawadi Supe",
+        "Nawali_1",
+        "Naygaon_2",
+        "Nazare Supe",
+        "Pargaon_2",
+        "Pimpri_2",
+        "Pisarve",
+        "Pise_1",
+        "Rajewadi_1",
+        "Rajuri_1",
+        "Ranmala",
+        "Rise_1",
+        "Singapur_2",
+        "Sonori",
+        "Tekavadi",
+        "Udachiwadi",
+        "Vanpuri",
+        "Waghapur_1",
+        "Zendewadi_2"
+      ]
+    },
+    {
+      "district": "Satara",
+      "taluka": "Dahivadi",
+      "stations": [
+        "Andhali_2",
+        "Bhandavali",
+        "Bidal_1",
+        "Bodake",
+        "Bothe",
+        "Dahivadi_1",
+        "Diwadi(M'Gad)",
+        "Dorgewadi (Naravane)",
+        "Gondavale Bk_1",
+        "Gondavale Kh",
+        "Kalewadi",
+        "Kasarwadi (Andhali)",
+        "Kiraksal",
+        "Kolewadi",
+        "Kulakjai",
+        "Lodhavade",
+        "Mahimangad",
+        "Malavadi_1",
+        "Mankarnewadi",
+        "Naravane",
+        "Palashi_4",
+        "Pandharwadi_1",
+        "Parkhandi",
+        "Pimpari",
+        "Pingali Bk",
+        "Pingali Kh",
+        "Satrewadi (Malavadi)",
+        "Shindi Bk",
+        "Shindi Kh",
+        "Shiravali_1",
+        "Shripalavan",
+        "Swarupkhanwadi",
+        "Takewadi_1",
+        "Ukirde",
+        "Warugad"
+      ]
+    },
+    {
+      "district": "Satara",
+      "taluka": "Vaduj",
+      "stations": [
+        "Banpuri",
+        "Bhurakwadi",
+        "Bombale",
+        "Dalmodi",
+        "Darajai",
+        "Daruj",
+        "Dhambewadi",
+        "Dharpudi",
+        "Enkul_1",
+        "Fadatarvadi",
+        "Ganeshwadi",
+        "Hingane_1",
+        "Kanasewadi",
+        "Katalgewadi",
+        "Katarkhatav",
+        "Katgun",
+        "Khatav_1",
+        "Khatwal",
+        "Mandave_1",
+        "Manetupewadi",
+        "Nidhal",
+        "Palasgaon_1",
+        "Pedgaon_1",
+        "Pusegaon",
+        "Satewadi",
+        "Tadawale",
+        "Umbarmale",
+        "Vaduj",
+        "Wakeshwar",
+        "Yelmarwadi",
+        "Yeralwadi_1"
+      ]
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Chandur Bazar",
+      "stations": [
+        "Belora (Tuljapur Ghadi)",
+        "Borgaon Mohana",
+        "Bramhanwada Thadi",
+        "Deurwada",
+        "Fupgaon",
+        "Ghat Ladki",
+        "Kalhodi",
+        "Khel Januji (Chaudhar )",
+        "Khel Januji (Deshmukh)",
+        "Kondwardha",
+        "Kural_1",
+        "Nimbhora_1",
+        "Pimpalkhuta_1",
+        "Pimpri Thugaon",
+        "Ratanpur_4",
+        "Redwa",
+        "Sarfapur",
+        "Shirajgaon Kasba",
+        "Talegaon Mohana",
+        "Thugaon Pimpri",
+        "Tonglapur",
+        "Virul_2",
+        "Vishroli_1"
+      ]
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Narkher",
+      "stations": [
+        "Bhishnur_1",
+        "Junona (Fuke)",
+        "Karandala Bk",
+        "Khamli",
+        "Khedi G_1",
+        "Malapur_3",
+        "Masli",
+        "Mhasora",
+        "Rajni_1",
+        "Sawargaon_2",
+        "Shindi (Umari)",
+        "Singarkheda",
+        "Sonoli_1",
+        "Tapani_1",
+        "Umari_1",
+        "Vivara",
+        "Wandli Kh"
+      ]
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Kalvan",
+      "stations": [
+        "Dahiwad_1",
+        "Gunjalnagar",
+        "Kankapur",
+        "Kapashi",
+        "Khadaktale",
+        "Kharde (Wakhari)",
+        "Khuntewadi",
+        "Matane",
+        "Pimpalgaon_1",
+        "Rameshwar_1",
+        "Sheri (Lohoner)",
+        "Shrirampur_1",
+        "Subhashnagar_1",
+        "Wajgaon",
+        "Wakhari",
+        "Warshi_1"
+      ]
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Satana",
+      "stations": [
+        "Deopurpada",
+        "Dongargaon_3",
+        "Fulemalwadi (Nv) (149)",
+        "Khalap_1",
+        "Lohoner",
+        "Mahalpatane",
+        "Malwadi_2",
+        "Meshi",
+        "Nimbole",
+        "Phule Nagar",
+        "Satvaichiwadi",
+        "Vasol",
+        "Vijaynagar_1"
+      ]
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Vite",
+      "stations": [
+        "Balavdi Kh",
+        "Benapur_1",
+        "Dhondewadi",
+        "Gorewadi_1",
+        "Hivare",
+        "Karanje_2",
+        "Khanapur_4",
+        "Mohi_1",
+        "Palashi_3",
+        "Posewadi",
+        "Ramnagar_7",
+        "Sultangade"
+      ]
+    },
+    {
+      "district": "Bhandara",
+      "taluka": "Pawni",
+      "stations": [
+        "Bamni_2",
+        "Kurza",
+        "Mohari_1",
+        "Ruyad"
+      ]
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Savner",
+      "stations": [
+        "Bhanegaon_1",
+        "Bina_1",
+        "Pota_2",
+        "Umri (jambhulpani)"
+      ]
+    },
+    {
+      "district": "Satara",
+      "taluka": "Mahabaleshwar",
+      "stations": [
+        "Nagewadi_2",
+        "Pachgani"
+      ]
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Achalpur",
+      "stations": [
+        "Achalpur_1"
+      ]
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Chandur",
+      "stations": [
+        "Chandur Rly"
+      ]
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Tivsa",
+      "stations": [
+        "Tiwsa_1"
+      ]
+    },
+    {
+      "district": "Jalgaon",
+      "taluka": "Edalabad",
+      "stations": [
+        "Shemalde"
+      ]
+    },
+    {
+      "district": "Latur",
+      "taluka": "Ahmadpur",
+      "stations": [
+        "Shivpur_2"
+      ]
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Parsivni",
+      "stations": [
+        "Parshivni"
+      ]
+    },
+    {
+      "district": "Nanded",
+      "taluka": "Kandahar",
+      "stations": [
+        "Shekapur_1"
+      ]
+    },
+    {
+      "district": "Nanded",
+      "taluka": "Mukher",
+      "stations": [
+        "Umardari"
+      ]
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Chandvad",
+      "stations": [
+        "Dugaon_1"
+      ]
+    },
+    {
+      "district": "Parbhani",
+      "taluka": "Gangakher",
+      "stations": [
+        "Gangakhed_1"
+      ]
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Sangli",
+      "stations": [
+        "Chabukswarwadi"
+      ]
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Solapur",
+      "stations": [
+        "Mardi"
+      ]
+    },
+    {
+      "district": "Thane",
+      "taluka": "Vada",
+      "stations": [
+        "Devli"
+      ]
+    },
+    {
+      "district": "Thane",
+      "taluka": "Jawhar",
+      "stations": [
+        "Jawhar"
+      ]
+    },
+    {
+      "district": "Thane",
+      "taluka": "Dahanu",
+      "stations": [
+        "Kasa Bk"
+      ]
+    },
+    {
+      "district": "Yavatmal",
+      "taluka": "Pandharkawada",
+      "stations": [
+        "Pahapal_1"
+      ]
+    }
+  ],
+  "naStations": [
+    {
+      "id": "8555ff32-a4c6-4fc5-8640-d77343dd1dc1",
+      "name": "Avha Yunuspur",
+      "district": "Buldana",
+      "lat": 20.788895,
+      "lng": 76.09316
+    },
+    {
+      "id": "ffc5f4c8-ad53-41b4-8dbb-c4ed3e0f3055",
+      "name": "Bamhanda",
+      "district": "Buldana",
+      "lat": 20.652942,
+      "lng": 76.036135
+    },
+    {
+      "id": "f8b6e9ca-65ad-4350-a7a7-e9cf358fc73b",
+      "name": "Borakhedi",
+      "district": "Buldana",
+      "lat": 20.665681,
+      "lng": 76.201012
+    },
+    {
+      "id": "1d4518d5-5d9f-4b02-8e3e-bfd200dc3699",
+      "name": "Chawarda",
+      "district": "Buldana",
+      "lat": 20.718509,
+      "lng": 76.125673
+    },
+    {
+      "id": "1a193d08-f845-4c80-9251-8a3f1fa72251",
+      "name": "Chinchpur",
+      "district": "Buldana",
+      "lat": 20.709461,
+      "lng": 76.201886
+    },
+    {
+      "id": "63174774-1b85-4987-8c40-93fe3a3d8a4e",
+      "name": "Dabha_1",
+      "district": "Buldana",
+      "lat": 20.575358,
+      "lng": 76.121667
+    },
+    {
+      "id": "e94f4c86-0df5-4746-a813-cb644701272a",
+      "name": "Dhad_3",
+      "district": "Buldana",
+      "lat": 20.39711,
+      "lng": 75.999817
+    },
+    {
+      "id": "c739d583-a469-496b-8a7f-eb97000579f6",
+      "name": "Dhamangaon Badhe",
+      "district": "Buldana",
+      "lat": 20.668667,
+      "lng": 76.031935
+    },
+    {
+      "id": "daca9534-ded1-49e8-bff6-e5a54344746b",
+      "name": "Didola Bk",
+      "district": "Buldana",
+      "lat": 20.716017,
+      "lng": 76.212917
+    },
+    {
+      "id": "b78790fd-95a3-4f8e-8764-e5b21b4c9086",
+      "name": "Ghusar Bk.",
+      "district": "Buldana",
+      "lat": 20.781705,
+      "lng": 76.198178
+    },
+    {
+      "id": "391cd785-383f-4f44-8df0-b8de5e498238",
+      "name": "Gotmara",
+      "district": "Buldana",
+      "lat": 20.590797,
+      "lng": 76.048663
+    },
+    {
+      "id": "8ca405f5-2713-4b69-9fae-577ebbb097c7",
+      "name": "Gulbheli",
+      "district": "Buldana",
+      "lat": 20.602527,
+      "lng": 76.138637
+    },
+    {
+      "id": "5092d853-bdb3-40fb-9b8d-c7169b23bfaa",
+      "name": "Jahagirpur",
+      "district": "Buldana",
+      "lat": 20.781219,
+      "lng": 76.132375
+    },
+    {
+      "id": "a183b060-2e0f-447e-860e-0b0d3bbc4cba",
+      "name": "Khamkhed Pr.Rajur",
+      "district": "Buldana",
+      "lat": 20.587917,
+      "lng": 76.164575
+    },
+    {
+      "id": "30e2c854-12fc-4ba9-ac67-1fdccca42ac1",
+      "name": "Kharbadi",
+      "district": "Buldana",
+      "lat": 20.667666,
+      "lng": 76.222858
+    },
+    {
+      "id": "9ab4ae60-0636-46c1-b295-4a574e0de544",
+      "name": "Khedi_2",
+      "district": "Buldana",
+      "lat": 20.624609,
+      "lng": 76.063271
+    },
+    {
+      "id": "4809e8bd-a416-4707-b5fa-47eb54bf6517",
+      "name": "Kinhola",
+      "district": "Buldana",
+      "lat": 20.662033,
+      "lng": 76.063489
+    },
+    {
+      "id": "ac7dcb00-8bd7-439d-aec0-6baf8b27854f",
+      "name": "Kolhi Gawali",
+      "district": "Buldana",
+      "lat": 20.757435,
+      "lng": 76.099818
+    },
+    {
+      "id": "abe6fb22-e5ae-4a12-83b8-1bf6e93bdf15",
+      "name": "Korhala",
+      "district": "Buldana",
+      "lat": 20.601879,
+      "lng": 76.064277
+    },
+    {
+      "id": "f83876e9-4a05-4f43-ac45-073b7725ec5c",
+      "name": "Kurha_1",
+      "district": "Buldana",
+      "lat": 20.573065,
+      "lng": 76.061334
+    },
+    {
+      "id": "fa5aa9fb-17fb-4d64-8301-ffd53d25d0a4",
+      "name": "Makodi_1",
+      "district": "Buldana",
+      "lat": 20.76767,
+      "lng": 76.127072
+    },
+    {
+      "id": "be176ba9-8839-4508-9a90-e0cc2c0c918b",
+      "name": "Mohegaon",
+      "district": "Buldana",
+      "lat": 20.593775,
+      "lng": 76.187412
+    },
+    {
+      "id": "84b47209-b92b-4101-b109-ec3598293f68",
+      "name": "Murti_1",
+      "district": "Buldana",
+      "lat": 20.626496,
+      "lng": 76.169077
+    },
+    {
+      "id": "27ce8a8a-d5a6-4594-b48d-006b372a0661",
+      "name": "Nipana",
+      "district": "Buldana",
+      "lat": 20.823407,
+      "lng": 76.120651
+    },
+    {
+      "id": "326d7caf-36fb-4ff2-ab71-306d26b20b2c",
+      "name": "Panhera Khedi",
+      "district": "Buldana",
+      "lat": 20.647304,
+      "lng": 76.064749
+    },
+    {
+      "id": "55fe42bb-04ba-447b-afab-6be8f0203281",
+      "name": "Parda_1",
+      "district": "Buldana",
+      "lat": 20.638904,
+      "lng": 76.208203
+    },
+    {
+      "id": "e5f7d522-0324-410e-8f68-4111d6960931",
+      "name": "Pimpalgaon Devi_1",
+      "district": "Buldana",
+      "lat": 20.76868,
+      "lng": 76.028312
+    },
+    {
+      "id": "ee59463f-345f-43ed-a59c-5a45c5d02eef",
+      "name": "Punai (Ridhora PrM/Jahan)",
+      "district": "Buldana",
+      "lat": 20.687308,
+      "lng": 76.192566
+    },
+    {
+      "id": "7930e01a-49ad-4fa6-91a7-ea1c4c3d9248",
+      "name": "Rajur_1",
+      "district": "Buldana",
+      "lat": 20.608447,
+      "lng": 76.178324
+    },
+    {
+      "id": "5c95cdb4-16cf-4b72-acb5-a2970b61f101",
+      "name": "Sawargaon Jahagir",
+      "district": "Buldana",
+      "lat": 20.795202,
+      "lng": 76.13394
+    },
+    {
+      "id": "706a6d9b-1781-4457-bbfa-9fe4dea95289",
+      "name": "Shelapur Bk.",
+      "district": "Buldana",
+      "lat": 20.764445,
+      "lng": 76.206637
+    },
+    {
+      "id": "39b5cf47-7fa8-4622-9fc5-09eb87c42f61",
+      "name": "Shelapur Kh",
+      "district": "Buldana",
+      "lat": 20.767924,
+      "lng": 76.198337
+    },
+    {
+      "id": "20c22d88-7378-49d1-a49f-5f2f92f73d89",
+      "name": "Shelgaon Bajar",
+      "district": "Buldana",
+      "lat": 20.793333,
+      "lng": 76.134148
+    },
+    {
+      "id": "567c2e87-62a4-4d78-8a9f-88c8ec7cc5e8",
+      "name": "Shirwa_1",
+      "district": "Buldana",
+      "lat": 20.637926,
+      "lng": 76.226297
+    },
+    {
+      "id": "9f5e0edd-21e7-4ced-94ef-8362f297afba",
+      "name": "Takli Pr Rajur",
+      "district": "Buldana",
+      "lat": 20.644976,
+      "lng": 76.176806
+    },
+    {
+      "id": "3cba700d-3a9d-49e5-a88b-0a57139bcf1c",
+      "name": "Takli Pr.Malkapur",
+      "district": "Buldana",
+      "lat": 20.756104,
+      "lng": 76.105428
+    },
+    {
+      "id": "7eeb3e1d-a8f5-420a-a858-98963c7d4aef",
+      "name": "Talkhed_1",
+      "district": "Buldana",
+      "lat": 20.744488,
+      "lng": 76.227271
+    },
+    {
+      "id": "f82df59b-3fe2-46ce-be1c-22eb59ffe68f",
+      "name": "Talni_1",
+      "district": "Buldana",
+      "lat": 20.775274,
+      "lng": 76.163404
+    },
+    {
+      "id": "eb1a4360-920e-4d1e-9608-9f6fe75d2e1b",
+      "name": "Tembhi_1",
+      "district": "Buldana",
+      "lat": 20.782953,
+      "lng": 76.130143
+    },
+    {
+      "id": "82643d19-2a73-4801-888f-2bb73047b503",
+      "name": "Ubalkhed_1",
+      "district": "Buldana",
+      "lat": 20.599487,
+      "lng": 76.096624
+    },
+    {
+      "id": "68c41b21-743f-4b84-b8ec-b6d263d50cb1",
+      "name": "Warud_1",
+      "district": "Buldana",
+      "lat": 20.679811,
+      "lng": 76.257978
+    },
+    {
+      "id": "28f92607-644d-4103-9558-47ca715f2d99",
+      "name": "Shivaji Nagar_1",
+      "district": "Pune",
+      "lat": 18.533452,
+      "lng": 73.845387
+    },
+    {
+      "id": "6b7a1b2c-f881-4e5a-b968-2472e0bb42a4",
+      "name": "Beldarpada",
+      "district": "Raigad",
+      "lat": 18.90085,
+      "lng": 72.929782
+    },
+    {
+      "id": "68107888-491a-445c-90e0-ebad26c78834",
+      "name": "Takali",
+      "district": "Solapur",
+      "lat": 17.49194444,
+      "lng": 75.82528056
+    }
+  ],
+  "outsidePolygon": [],
+  "geoJsonNotInAU": [
+    {
+      "district": "Ahmednagar",
+      "taluka": "Ahmadnagar"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Akola"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Karjat"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Kopargaon"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Nevasa"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Parner"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Pathardi"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Rahuri"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Sangamner"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Shevgaon"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Shrigonda"
+    },
+    {
+      "district": "Ahmednagar",
+      "taluka": "Shrirampur"
+    },
+    {
+      "district": "Akola",
+      "taluka": "Barsi Takli"
+    },
+    {
+      "district": "Akola",
+      "taluka": "Murtajapur"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Achalpur"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Anjangaon"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Bhatkuli Jain"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Chandur"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Chandur Bazar"
+    },
+    {
+      "district": "Amravati",
+      "taluka": "Tivsa"
+    },
+    {
+      "district": "Aurangabad",
+      "taluka": "Gangapur"
+    },
+    {
+      "district": "Aurangabad",
+      "taluka": "Soygaon"
+    },
+    {
+      "district": "Bhandara",
+      "taluka": "Amgaon"
+    },
+    {
+      "district": "Bhandara",
+      "taluka": "Mohari"
+    },
+    {
+      "district": "Bhandara",
+      "taluka": "Pawni"
+    },
+    {
+      "district": "Bhandara",
+      "taluka": "Salekasa"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Ambajogai"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Ashti"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Bid"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Gevrai"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Jamkhed"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Kaij"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Majalgaon"
+    },
+    {
+      "district": "Bid",
+      "taluka": "Patoda"
+    },
+    {
+      "district": "Chandrapur",
+      "taluka": "Bhadravathi"
+    },
+    {
+      "district": "Chandrapur",
+      "taluka": "Bramhapuri"
+    },
+    {
+      "district": "Chandrapur",
+      "taluka": "Gond Pipri"
+    },
+    {
+      "district": "Dhule",
+      "taluka": "Sindkheda"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Ahiri"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Armori"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Chamursi"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Dhanora"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Garhchiroli"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Itapalli"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Kurkheda"
+    },
+    {
+      "district": "Garhchiroli",
+      "taluka": "Sironcha"
+    },
+    {
+      "district": "Gondiya",
+      "taluka": "Arjuni Morgaon"
+    },
+    {
+      "district": "Gondiya",
+      "taluka": "Deori"
+    },
+    {
+      "district": "Gondiya",
+      "taluka": "Gondia"
+    },
+    {
+      "district": "Gondiya",
+      "taluka": "Goregaon"
+    },
+    {
+      "district": "Gondiya",
+      "taluka": "Tirora"
+    },
+    {
+      "district": "Greater Bombay",
+      "taluka": "Bombay"
+    },
+    {
+      "district": "Greater Bombay",
+      "taluka": "Thane"
+    },
+    {
+      "district": "Hingoli",
+      "taluka": "Basmat"
+    },
+    {
+      "district": "Jalgaon",
+      "taluka": "Edalabad"
+    },
+    {
+      "district": "Jalgaon",
+      "taluka": "Yaval"
+    },
+    {
+      "district": "Kolhapur",
+      "taluka": "Bavda"
+    },
+    {
+      "district": "Kolhapur",
+      "taluka": "Gargoti"
+    },
+    {
+      "district": "Kolhapur",
+      "taluka": "Hatkalangda"
+    },
+    {
+      "district": "Kolhapur",
+      "taluka": "Kolhapur"
+    },
+    {
+      "district": "Latur",
+      "taluka": "Ahmadpur"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Kalmeshwar"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Kamthi"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Mauda"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Narkher"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Parsivni"
+    },
+    {
+      "district": "Nagpur",
+      "taluka": "Savner"
+    },
+    {
+      "district": "Nanded",
+      "taluka": "Diglur"
+    },
+    {
+      "district": "Nanded",
+      "taluka": "Kandahar"
+    },
+    {
+      "district": "Nanded",
+      "taluka": "Mukher"
+    },
+    {
+      "district": "Nandurbar",
+      "taluka": "Akkalkuva"
+    },
+    {
+      "district": "Nandurbar",
+      "taluka": "Dhadgaon"
+    },
+    {
+      "district": "Nandurbar",
+      "taluka": "Navapur"
+    },
+    {
+      "district": "Nandurbar",
+      "taluka": "Shahada"
+    },
+    {
+      "district": "Nandurbar",
+      "taluka": "Taloda"
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Chandvad"
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Kalvan"
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Peint"
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Satana"
+    },
+    {
+      "district": "Nashik",
+      "taluka": "Yeola"
+    },
+    {
+      "district": "Osmanabad",
+      "taluka": "Kallam"
+    },
+    {
+      "district": "Osmanabad",
+      "taluka": "Parenda"
+    },
+    {
+      "district": "Parbhani",
+      "taluka": "Gangakher"
+    },
+    {
+      "district": "Pune",
+      "taluka": "Ghod"
+    },
+    {
+      "district": "Pune",
+      "taluka": "Paud"
+    },
+    {
+      "district": "Pune",
+      "taluka": "Rajgurunagar"
+    },
+    {
+      "district": "Pune",
+      "taluka": "Sasvad"
+    },
+    {
+      "district": "Pune",
+      "taluka": "Wadgaon"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Alibag"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Khalapur"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Mahad"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Mangaon"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Mhasla"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Pali"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Pen"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Poladpur"
+    },
+    {
+      "district": "Raigarh",
+      "taluka": "Roha"
+    },
+    {
+      "district": "Ratnagiri",
+      "taluka": "Devrukh"
+    },
+    {
+      "district": "Ratnagiri",
+      "taluka": "Mandangarh"
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Islampur"
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Jath"
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Kavathe Mahankal"
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Sangli"
+    },
+    {
+      "district": "Sangli",
+      "taluka": "Vite"
+    },
+    {
+      "district": "Satara",
+      "taluka": "Dahivadi"
+    },
+    {
+      "district": "Satara",
+      "taluka": "Mahabaleshwar"
+    },
+    {
+      "district": "Satara",
+      "taluka": "Medha"
+    },
+    {
+      "district": "Satara",
+      "taluka": "Shirwal"
+    },
+    {
+      "district": "Satara",
+      "taluka": "Vaduj"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Devgarh"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Kankauli"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Kudal"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Malvan"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Savantvadi"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Vaibhavwadi"
+    },
+    {
+      "district": "Sindhudurg",
+      "taluka": "Vengurla"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Akalkot"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Barsi"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Karmal"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Malsiras"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Mangalwedha"
+    },
+    {
+      "district": "Solapur",
+      "taluka": "Solapur"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Dahanu"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Jawhar"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Mokhada"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Palghar"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Talasri"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Vada"
+    },
+    {
+      "district": "Thane",
+      "taluka": "Vasai"
+    },
+    {
+      "district": "Wardha",
+      "taluka": "Selu"
+    },
+    {
+      "district": "Washim",
+      "taluka": "Mangrul Pir"
+    },
+    {
+      "district": "Yavatmal",
+      "taluka": "Darwha"
+    },
+    {
+      "district": "Yavatmal",
+      "taluka": "Kalam"
+    },
+    {
+      "district": "Yavatmal",
+      "taluka": "Pandharkawada"
+    },
+    {
+      "district": "Yavatmal",
+      "taluka": "Yavatmal"
+    }
+  ]
+}

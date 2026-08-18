@@ -6,6 +6,8 @@ import morgan from "morgan";
 import healthRoutes from "./routes/health.routes.js";
 import ingestionRoutes from "./routes/ingestion.routes.js";
 import stationRoutes from "./routes/station.routes.js";
+import alertRoutes from "./routes/alert.routes.js";
+import districtRoutes from "./routes/district.routes.js";
 
 const app = express();
 
@@ -34,6 +36,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/health", healthRoutes);
 app.use("/api/ingestion", ingestionRoutes);
 app.use("/stations", stationRoutes);
+app.use("/api/stations", stationRoutes);
+
+app.use("/alerts", alertRoutes);
+app.use("/api/alerts", alertRoutes);
+
+app.use("/districts", districtRoutes);
+app.use("/api/districts", districtRoutes);
 
 /*
 |--------------------------------------------------------------------------
