@@ -83,7 +83,8 @@ model Station {
   readings            GroundwaterReading[]
   forecasts           Forecast[]
   rechargeResults     RechargeResult[]
-  alerts              Alert[]
+  alerts              Alert[]     
+  rainfallReadings    RainfallReading[]
 
   @@unique([stationName, agency, latitude, longitude])
 }
@@ -115,7 +116,24 @@ model GroundwaterReading {
   @@index([timestamp])
   @@index([stationId, timestamp])
 }
+model RainfallReading {
+  id          String   @id @default(uuid())
 
+  stationId   String
+  station     Station  @relation(fields: [stationId], references: [id], onDelete: Cascade)
+
+  date        DateTime
+
+  rainfallMm  Float
+
+  source      String   @default("IMD")
+
+  createdAt   DateTime @default(now())
+
+  @@unique([stationId, date])
+  @@index([stationId])
+  @@index([date])
+}
 model Forecast {
 
   id                  String   @id @default(uuid())
